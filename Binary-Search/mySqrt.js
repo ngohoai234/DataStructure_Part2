@@ -13,11 +13,11 @@
  */
 var mySqrt = function (x) {
   let l = 1,
-    r = x,
-    res = 0;
+    r = x;
+  res = 0;
 
   while (l <= r) {
-    const m = Math.floor((l + r) / 2);
+    let m = Math.floor((l + r) / 2);
     const square = m ** 2;
     if (square === x) {
       return m;
@@ -28,8 +28,7 @@ var mySqrt = function (x) {
       l = m + 1;
     }
   }
-
   return res;
 };
 
-console.log(mySqrt(8));
+console.log(mySqrt(0));

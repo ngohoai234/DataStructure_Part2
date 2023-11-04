@@ -6,17 +6,20 @@
 // Output: 3
 
 const majorityElement = (nums) => {
-  const countObj = {};
-  let count = -1;
-  let key = -1;
-  for (const n of nums) {
-    countObj[n] ? countObj[n]++ : (countObj[n] = 1);
-    if (countObj[n] > count) {
-      count = countObj[n];
-      key = n;
+  let res = 0,
+    count = 0;
+
+  for (const num of nums) {
+    if (count === 0) {
+      res = num;
+    }
+    if (res === num) {
+      count++;
+    } else {
+      count--;
     }
   }
-  return key;
+  return res;
 };
 
 const n = [3, 2, 3];

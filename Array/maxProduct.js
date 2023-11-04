@@ -1,25 +1,26 @@
 const maxProduct = (s) => {
-  const N = s.length;
-  const pali = {}; // bitmask : length
-  debugger;
-  for (let mask = 1; mask < 1 << N; mask++) {
-    // 1 << N == 2 ** N
-    let subseq = '';
-    for (let i = 0; i < N; i++) {
+  const n = s.length;
+  let res = 0;
+  const pali = {};
+  const length = 1 << n; // 2 ^ n
+
+  for (let mask = 1; mask < length; mask++) {
+    let subSequence = '';
+    for (let i = 0; i < n; i++) {
+      //   check whether mask includes in range
       if (mask & (1 << i)) {
-        subseq += s[i];
+        subSequence += s[i];
       }
     }
-    console.log(subseq, ' subseq');
-    if (subseq === subseq.split('').reverse().join('')) {
-      pali[mask] = subseq.length;
+    if (subSequence === subSequence.split('').reverse().join('')) {
+      pali[mask] = subSequence.length;
     }
   }
-  let res = 0;
-  for (let m1 in pali) {
-    for (let m2 in pali) {
+
+  for (const m1 in pali) {
+    for (const m2 in pali) {
+      // disjoint
       if ((m1 & m2) === 0) {
-        // disjoint
         res = Math.max(res, pali[m1] * pali[m2]);
       }
     }

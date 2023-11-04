@@ -7,36 +7,29 @@ var singleNonDuplicate = function (nums) {
     r = nums.length - 1;
 
   while (l <= r) {
-    let m = Math.floor((l + r) / 2);
+    const m = Math.floor((l + r) / 2);
+
     if (
       (m - 1 < 0 || nums[m - 1] !== nums[m]) &&
-      (m === nums.length || nums[m + 1] !== nums[m])
+      (m + 1 === nums.length || nums[m] !== nums[m + 1])
     ) {
       return nums[m];
     }
-    // get the remain size
-    let leftSize = nums[m - 1] === nums[m] ? m - 1 : m;
+    const leftSize = nums[m - 1] === nums[m] ? m - 1 : m;
 
-    if (leftSize) {
-      r = m - 1;
-    } else {
+    if (leftSize % 2 === 0) {
       l = m + 1;
+    } else {
+      r = m - 1;
     }
   }
 };
 
-// 1 1 2 3 3 4 4
+// every elements appears exactly twice
 
-// input: given sorted array
+//
 
-// output: return the single element that appear only once
+// 1 1 2 3 3 4 4 8 8
+//         |
 
-// Must be : O(log n) and O(1) space
-
-// Input: nums = [1,1,2,3,3,4,4,8,8]
-// Output: 2
-
-// Input: nums = [3,3,7,7,10,11,11]
-// Output: 10
-
-console.log(singleNonDuplicate([1, 1, 2, 3, 3, 4, 4]));
+// if num[m] !== num[m-1]

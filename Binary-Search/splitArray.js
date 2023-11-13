@@ -5,33 +5,36 @@
  */
 var splitArray = function (nums, k) {
   let l = Math.max(...nums);
-  let r = nums.reduce((sum, data) => sum + data, 0);
+  let r = nums.reduce((sum, n) => sum + n, 0);
+  let res = r;
 
-  const isValid = (max) => {
-    let currentMax = max;
-    let c = 0;
-
+  const canSplit = (maxSum) => {
+    let sub = 1;
+    let currentSum = 0;
     for (let i = 0; i < nums.length; i++) {
-      if (currentMax - nums[i] < 0) {
-        c += 1;
-        currentMax = max;
+      currentSum += nums[i];
+
+      if (currentSum > maxSum) {
+        currentSum = nums[i];
+        sub += 1;
       }
-      currentMax -= nums[i];
     }
 
-    return c === k || (c < k && currentMax > 0);
+    // why not to be equal
+    // because when sub <= k we can split more times
+    return sub <= k;
   };
-
+  debugger;
   while (l <= r) {
     const m = Math.floor((l + r) / 2);
-
-    if (isValid(m)) {
+    if (canSplit(m)) {
       r = m - 1;
+      res = m;
     } else {
       l = m + 1;
     }
   }
-  return l;
+  return res;
 };
 
 console.log(splitArray([7, 2, 5, 10, 8], 2));

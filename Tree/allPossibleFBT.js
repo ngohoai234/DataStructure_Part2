@@ -8,50 +8,41 @@
  */
 /**
  * @param {number} n
- * @return {TreeNode[]}
- */
-var allPossibleFBT = function (n) {};
-/**
- * Definition for a binary tree node.
- * function TreeNode(val, left, right) {
- *     this.val = (val===undefined ? 0 : val)
- *     this.left = (left===undefined ? null : left)
- *     this.right = (right===undefined ? null : right)
- * }
- */
-/**
- * @param {number} n
  * @return {TreeNode[]}7
  */
 var allPossibleFBT = function (n) {
-  const res = [];
-  const map = new Map();
+  const dp = [];
 
-  if (n % 2 === 0) {
-    return res;
+  for (let i = 1; i <= n; i++) {
+    dp[i] = [];
   }
+  debugger;
 
-  if (n === 1) {
-    return [new TreeNode(0)];
-  }
+  dp[1] = [new TreeNode(0)];
 
-  if (map.has(n)) {
-    return map.get(n);
-  }
+  for (let count = 3; count <= n; count += 2) {
+    for (let i = 1; i < count - 1; i += 2) {
+      // 0 0 0
+      // if we select the second is the root node then
 
-  for (let i = 1; i < n; i += 2) {
-    const j = n - i - 1;
-    const allLeft = allPossibleFBT(i);
-    const allRight = allPossibleFBT(j);
+      // we only has one from the left and one from the right
+      // 0 | 0
 
-    for (const l of allLeft) {
-      for (const r of allRight) {
-        const root = new TreeNode(0, l, r);
-        res.push(root);
-        map.set(n, root);
+      // -> the total node 1 | 1
+
+      const j = count - i - 1;
+
+      const left = dp[i];
+      const right = dp[j];
+
+      for (const l of left) {
+        for (const r of right) {
+          const root = new TreeNode(0, l, r);
+          dp[count].push(root);
+        }
       }
     }
   }
 
-  return res;
+  return dp[n];
 };

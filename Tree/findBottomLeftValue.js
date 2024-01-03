@@ -1,3 +1,5 @@
+// 513. Find Bottom Left Tree Value
+
 /**
  * Definition for a binary tree node.
  * function TreeNode(val, left, right) {
@@ -11,27 +13,22 @@
  * @return {number}
  */
 var findBottomLeftValue = function (root) {
-  const queue = [root];
-
-  let res = root.val;
-
-  while (queue.length) {
-    let length = queue.length;
-
-    while (length) {
-      const currNode = queue.shift();
-      if (currNode.right) {
-        queue.push(currNode.right);
-      }
-
-      if (currNode.left) {
-        queue.push(currNode.left);
-      }
-
-      res = currNode ? currNode.val : null;
-      length -= 1;
+  const dfs = (node, level, res) => {
+    if (res[1] < level) {
+      res[0] = node.val;
+      res[1] = level;
     }
-  }
 
-  return res;
+    if (node.left) {
+      dfs(node.left, level + 1, res);
+    }
+
+    if (node.right) {
+      dfs(node.right, level + 1, res);
+    }
+
+    return res[0];
+  };
+
+  return dfs(root, 0, [-1, -1]);
 };

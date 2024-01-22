@@ -3,28 +3,30 @@
  * @return {number[][]}
  */
 var permuteUnique = function (nums) {
-  nums.sort((a, b) => a - b);
-
   const res = [];
-  const seen = new Array(nums.length).fill(false);
+
+  const count = {};
+  for (const num of nums) {
+    count[num] |= 0;
+    count[num] += 1;
+  }
+
   const bt = (subset) => {
     if (subset.length === nums.length) {
       res.push([...subset]);
       return;
     }
 
-    for (let i = 0; i < nums.length; i++) {
-      if ((i > 0 && nums[i - 1] === nums[i] && !seen[i - 1]) || seen[i]) {
-        continue;
+    for (const n in count) {
+      if (count[n] > 0) {
+        subset.push(n);
+        count[n] -= 1;
+        bt(subset);
+        count[n] += 1;
+        subset.pop();
       }
-      seen[i] = true;
-      subset.push(nums[i]);
-      bt(subset);
-      seen[i] = false;
-      subset.pop();
     }
   };
-
   bt([]);
   return res;
 };

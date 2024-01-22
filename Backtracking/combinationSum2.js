@@ -14,15 +14,12 @@ var combinationSum2 = function (candidates, target) {
     if (curr >= target) {
       return;
     }
-    let prev = -1;
     for (let i = start; i < candidates.length; i++) {
-      if (candidates[i] === prev) {
-        continue;
+      if (i === start || candidates[i - 1] !== candidates[i]) {
+        subset.push(candidates[i]);
+        bt(curr + candidates[i], i + 1, subset);
+        subset.pop();
       }
-      subset.push(candidates[i]);
-      bt(curr + candidates[i], i + 1, subset);
-      subset.pop();
-      prev = candidates[i];
     }
   };
 

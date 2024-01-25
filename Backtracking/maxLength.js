@@ -25,16 +25,20 @@ var maxLength = function (arr) {
       return charSet.size;
     }
     let res = 0;
-    if (!overlap(charSet, arr[i])) {
-      for (const c of arr[i]) {
-        charSet.add(c);
-      }
-      res = bt(i + 1);
-      for (const c of arr[i]) {
-        charSet.delete(c);
+    for (let j = i; j < arr.length; j++) {
+      if (!overlap(charSet, arr[j])) {
+        for (const c of arr[j]) {
+          charSet.add(c);
+        }
+        res = Math.max(res, bt(j + 1));
+        for (const c of arr[j]) {
+          charSet.delete(c);
+        }
+      } else {
+        res = Math.max(res, charSet.size);
       }
     }
-    return Math.max(res, bt(i + 1));
+    return res;
   };
 
   return bt(0);
@@ -42,4 +46,12 @@ var maxLength = function (arr) {
 
 // A string s is formed by the concatenation of a subsequence of arr that has unique characters.
 
-console.log(maxLength(['cha', 'r', 'act', 'ers']));
+console.log(
+  maxLength([
+    'e',
+    'tpgynpylqbyqjaf',
+    'svkgfmpgftxjjrcxxsog',
+    'bxypbbrlckiolfwpqgsoc',
+    'kwnelumrnnsryjdeppanuqbsu',
+  ])
+);

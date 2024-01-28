@@ -26,14 +26,14 @@ var smallestNumber = function (pattern) {
           pattern[i - 1] === 'I' &&
           currentNumber[currentNumber.length - 1] >= j
         ) {
-          continue;
+          break;
         }
         if (
           i &&
           pattern[i - 1] === 'D' &&
           currentNumber[currentNumber.length - 1] <= j
         ) {
-          continue;
+          break;
         }
         visited[j] = true;
         currentNumber.push(j);

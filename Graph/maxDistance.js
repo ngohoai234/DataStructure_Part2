@@ -13,9 +13,6 @@ var maxDistance = function (grid) {
     [1, 0],
     [0, -1],
   ];
-  const visited = Array.from({ length: grid.length }).map(() =>
-    Array.from({ length: grid.length }).fill(false)
-  );
 
   for (let row = 0; row < grid.length; row++) {
     for (let col = 0; col < grid[row].length; col++) {
@@ -39,23 +36,30 @@ var maxDistance = function (grid) {
           nextRow >= grid.length ||
           nextCol < 0 ||
           nextCol >= grid.length ||
-          visited[nextRow][nextCol] ||
           grid[nextRow][nextCol] === ISLAND
         ) {
           continue;
         }
         queue.push([nextRow, nextCol]);
-        visited[row][col] = true;
+        grid[nextRow][nextCol] = 1;
       }
     }
     step += 1;
   }
 
-  return step;
+  return step === 0 ? -1 : step;
 };
 
 // where 0 represents water and 1 represents land,
 
 // find a water cell such that its distance to the nearest land cell is maximized,
 
-console.log(maxDistance([[1, 2]]));
+console.log(
+  maxDistance([
+    [0, 0, 1, 1, 1],
+    [0, 1, 1, 0, 0],
+    [0, 0, 1, 1, 0],
+    [1, 0, 0, 0, 0],
+    [1, 1, 0, 0, 1],
+  ])
+);
